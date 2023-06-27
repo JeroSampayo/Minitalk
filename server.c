@@ -14,27 +14,34 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-
-void handle_signal(int signum) 
+#include "minitalk.h"
+void	byte(int sig)
 {
-    if (signum == SIGUSR1) {
-        printf("Servidor recibió una señal SIGUSR1\n");
-    }
-    else if (signum == SIGUSR2) {
-        printf("Servidor recibió una señal SIGUSR2\n");
-    }
+	int	c = 0;
+	int	num_bit = 0;
+
+	if (sig == SIGUSR1)
+		c = (c | (128 >> num_bit));
+	num_bit++;
+	if (num_bit == 8)
+	{
+		ft_printf("%c", c);
+		num_bit = 0;
+		c = 0;
+	}
 }
 
 int main() 
 {
 	pid_t server_pid;
 	server_pid = getpid();
-    printf("PID del servidor: %d\n", server_pid);
+    	if (printf("PID del servidor: %d\n", server_pid == -1);
 	
 	while (1)
 	{
-		signal(SIGUSR1, handle_signal);
-   		signal(SIGUSR2, handle_signal);
+		signal(SIGUSR1, byte);
+   		signal(SIGUSR2, byte);
+		pause();
 	}
 	return 0;
 }
