@@ -1,44 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2022/10/10 20:02:08 by jmiras-s          #+#    #+#             */
+/*   Updated: 2022/11/29 14:23:38 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+int	ft_atoi(const char *str)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	int	i;
+	int	s;
+	int	res;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	i = 0;
+	s = 1;
+	res = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		if (str[i] == '-')
+			s = -1;
+		i++;
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
+		res = (res * 10) + (str[i] - '0');
+		i++;
 	}
-	return (0);
+	return (res * s);
 }

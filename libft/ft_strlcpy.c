@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2022/10/10 19:43:38 by jmiras-s          #+#    #+#             */
+/*   Updated: 2022/11/12 14:19:32 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	size_t	srcsize;
+	size_t	i;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	srcsize = ft_strlen(src);
+	i = 0;
+	if (dstsize != 0)
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		while (src[i] != '\0' && i < (dstsize - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
+	return (srcsize);
 }

@@ -1,44 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2022/11/12 17:00:43 by jmiras-s          #+#    #+#             */
+/*   Updated: 2022/12/08 14:15:22 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	char	*s3;
+	size_t	i;
+	size_t	l;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	l = ft_strlen(s1);
+	s3 = (char *)malloc(sizeof(char) * (l + ft_strlen(s2) + 1));
+	if (!s3)
+		return (NULL);
+	if (l != 0)
+		ft_memcpy(s3, s1, l);
+	i = 0;
+	while (s2[i] != '\0')
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		s3[l + i] = s2[i];
+		i++;
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
+	s3[l + i] = '\0';
+	return (s3);
 }

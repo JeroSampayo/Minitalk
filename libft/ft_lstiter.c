@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2023/07/19 16:22:42 by jmiras-s          #+#    #+#             */
+/*   Updated: 2023/07/19 16:23:00 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	t_list	*temp;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	while (lst)
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		temp = lst->next;
+		f(lst->content);
+		lst = temp;
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
 }

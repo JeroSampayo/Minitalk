@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2022/11/12 16:44:29 by jmiras-s          #+#    #+#             */
+/*   Updated: 2022/12/08 13:09:45 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	char	*sub;
+	size_t	i;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
-	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
-	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
+	if (!s)
+		return (NULL);
+	i = ft_strlen(s);
+	if (i < start)
+		return (ft_strdup(""));
+	if (start + len > i)
+		len = i - start;
+	sub = (char *)malloc(sizeof(char) * (len + 1));
+	if (!sub)
+		return (NULL);
+	if (start < ft_strlen(s))
+		ft_memcpy(sub, &s[start], len);
+	sub[len] = '\0';
+	return (sub);
 }

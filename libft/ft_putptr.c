@@ -1,44 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2023/03/14 22:24:07 by jmiras-s          #+#    #+#             */
+/*   Updated: 2023/07/25 17:25:55 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
+#include "libft.h"
 
-void	byte(int sig)
+int	ft_putptr(unsigned long ptr)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	int	i;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
-	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
-	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
+	if (ft_putstr("0x") < 0)
+		return (-1);
+	i = ft_puthex(ptr, "0123456789abcdef");
+	if (i == -1)
+		return (-1);
+	return (i + 2);
 }

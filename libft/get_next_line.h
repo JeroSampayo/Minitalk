@@ -1,44 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2023/04/25 12:52:05 by jmiras-s          #+#    #+#             */
+/*   Updated: 2023/05/16 18:50:30 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
-{
-	static int	c = 0;
-	static int	num_bit = 0;
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
-	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
-	}
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4
+# endif
 
-int	main(void)
-{
-	pid_t	pid;
+# include <stdlib.h>
+# include <unistd.h>
+# include <limits.h>
 
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
-}
+char	*get_next_line(int fd);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+int		ft_strlen(char *str);
+char	*ft_strchr(char *s, int i);
+char	*ft_strjoin(char *s1, char *s2);
+void	*ft_free(char **str);
+
+#endif

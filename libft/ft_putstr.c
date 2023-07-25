@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2023/03/14 22:22:34 by jmiras-s          #+#    #+#             */
+/*   Updated: 2023/07/25 17:23:48 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+int	ft_putstr(const char *s)
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	int	i;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	i = 0;
+	if (!s)
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		if (write(1, "(null)", 6) < 0)
+			return (-1);
+		return (6);
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
+	while (*s)
 	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
+		if (ft_putchar(*s++) < 0)
+			return (-1);
+		i++;
 	}
-	return (0);
+	return (i);
 }

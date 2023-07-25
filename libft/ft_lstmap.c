@@ -1,44 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:06:12 by jmiras-s         ###   ########.fr       */
+/*   Created: 2023/07/19 16:30:41 by jmiras-s          #+#    #+#             */
+/*   Updated: 2023/07/19 16:30:58 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minitalk.h"
 
-void	byte(int sig)
+#include "libft.h"
+
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	static int	c = 0;
-	static int	num_bit = 0;
+	t_list	*result;
+	t_list	*temp;
+	void	*content;
 
-	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
-	num_bit++;
-	if (num_bit == 8)
+	if (!lst)
+		return (NULL);
+	result = NULL;
+	while (lst)
 	{
-		ft_printf("%c", c);
-		num_bit = 0;
-		c = 0;
+		content = f(lst->content);
+		temp = ft_lstnew(content);
+		if (!temp)
+		{
+			ft_lstclear(&result, del);
+			del(content);
+			return (NULL);
+		}
+		ft_lstadd_back(&result, temp);
+		lst = lst->next;
 	}
-}
-
-int	main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	if (ft_printf("%i\n", pid) == -1)
-		exit(1);
-	while (1)
-	{
-		signal(SIGUSR2, byte);
-		signal(SIGUSR1, byte);
-		pause();
-	}
-	return (0);
+	return (result);
 }
