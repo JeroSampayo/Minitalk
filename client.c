@@ -6,7 +6,7 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:29 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/02 18:41:36 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:19:32 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -14,12 +14,21 @@
 int	main(int argc, char **argv)
 {
 	pid_t	pid;
+	int len;
 
 	if (argc != 3)
 		return (0);
 	if (!valid_pid(argv[1]))
 		return (0);
 	pid = ft_atoi(argv[1]);
+	len = ft_strlen(argv[2]);
+		while (len > 0)
+		{
+			kill (pid, SIGUSR1);
+			len--;
+			usleep(500);
+		}		
+	kill (pid, SIGUSR2);
 	char_to_byte(argv[2], pid);
 	ft_printf("OK\n");
 	return (0);
@@ -49,6 +58,7 @@ void	char_to_byte(char *s, pid_t pid)
 		num_bit = -1;
 		while (++num_bit < 8)
 		{
+			usleep(300);
 			if ((s[i] & (128 >> num_bit)) == 0)
 			{
 				if (kill(pid, SIGUSR2) == -1)
@@ -59,8 +69,13 @@ void	char_to_byte(char *s, pid_t pid)
 				if (kill(pid, SIGUSR1) == -1)
 					exit(1);
 			}
-			usleep(500);
 		}
+	}
+	i = 0;
+	while (i++ < 8)
+	{
+		kill(pid, SIGUSR2);
+		usleep(500);
 	}
 }
 

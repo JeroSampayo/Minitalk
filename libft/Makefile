@@ -6,7 +6,7 @@
 #    By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/19 21:01:28 by jmiras-s          #+#    #+#              #
-#    Updated: 2023/07/25 17:22:47 by jmiras-s         ###   ########.fr        #
+#    Updated: 2023/08/03 14:54:13 by jmiras-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ DEPS = $(SRC:.c=.d)
 # ----- RULE -
 
 %.o: %.c $(MKFL) libft.h
-	$(CC) $(CFLAGS) -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) -MMD -c $< -o $@
 	@echo "$(BGreen)Copilando:	$(NC)$<"
 
 all: $(NAME)
