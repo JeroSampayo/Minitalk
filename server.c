@@ -6,47 +6,46 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/03 16:19:35 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:46:40 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
+void	ft_free(char **str, int *len)
+{
+	ft_printf("%s", *str);
+	free(*str);
+	*str = NULL;
+	*len = -1;
+}
+
 void	byte(int sig)
 {
-	static unsigned char c = 0;
-	static int	num_bit = 0;
-	static char *str = NULL;
-	static int len = 0;
+	static int				num_bit = 0;
+	static char				*str = NULL;
+	static int				len = 0;
 
-	ft_printf("%d\n", num_bit);
 	if (str == NULL)
+	{
+		if (sig == SIGUSR1)
+			len++;
+		else 
 		{
-			if (sig == SIGUSR1)
-				len++;
-			else 
-			{
-				str = malloc(sizeof(char)* len + 1);
-				len = 0;
-			}
-			return;
+			str = malloc(sizeof(char) * (len + 1));
+			len = 0;
 		}
+		return ;
+	}
 	if (sig == SIGUSR1)
-		c = (c | (128 >> num_bit));
+		str[len] = (str[len] | (128 >> num_bit));
 	num_bit++;
 	if (num_bit == 8)
 	{
-		str[len] = c;
-		len++;
 		num_bit = 0;
-		if (c == '\0')
-		{
-			ft_printf("%s", str);
-			free(str);
-			str = NULL;
-			len = 0;
-		}
-		c = 0;
-	}	
+		if (str[len] == 0)
+			ft_free(&str, &len);
+		len++;
+	}
 }
 
 int	main(void)

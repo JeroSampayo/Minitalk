@@ -6,7 +6,7 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 20:08:49 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/07/25 18:39:44 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:43:21 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdio.h>
 # include <stdarg.h>
 
-# define BASEHEXL (char *)"0123456789abcdef"
-# define BASEHEXU (char *)"0123456789ABCDEF"
+# define BASEHEXL "0123456789abcdef"
+# define BASEHEXU "0123456789ABCDEF"
 
 typedef struct s_vals	t_vals;
 
