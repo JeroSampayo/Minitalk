@@ -6,7 +6,7 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:29 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/09 17:47:47 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/09 19:45:49 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -47,6 +47,20 @@ int	valid_pid(char *s)
 	return (1);
 }
 
+void	send_bits(int pid, int i)
+{
+	if (!i)
+	{
+		if (kill(pid, SIGUSR2) == -1)
+			exit(1);
+	}
+	else
+	{
+		if (kill(pid, SIGUSR1) == -1)
+			exit(1);
+	}
+}
+
 void	char_to_byte(char *s, pid_t pid)
 {
 	int	i;
@@ -60,15 +74,9 @@ void	char_to_byte(char *s, pid_t pid)
 		{
 			usleep(300);
 			if ((s[i] & (128 >> num_bit)) == 0)
-			{
-				if (kill(pid, SIGUSR2) == -1)
-					exit(1);
-			}
+				send_bits(pid, 0);
 			else
-			{
-				if (kill(pid, SIGUSR1) == -1)
-					exit(1);
-			}
+				send_bits(pid, 1);
 		}
 	}
 	i = 0;
