@@ -6,14 +6,14 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/09 20:13:52 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:00:00 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
 void	ft_free(char **str, int *len)
 {
-	ft_printf("%s", *str);
+	ft_printf("%s\n", *str);
 	free(*str);
 	*str = NULL;
 	*len = -1;
@@ -21,13 +21,15 @@ void	ft_free(char **str, int *len)
 
 char	*safe_malloc(size_t size)
 {
-	char *ptr = malloc(size);
+	char	*ptr;
+
+	ptr = malloc(size);
 	if (!ptr)
 	{
 		ft_printf("Error: Unable to allocate memory.\n");
 		exit(1);
 	}
-	return ptr;
+	return (ptr);
 }
 
 void	byte(int sig)

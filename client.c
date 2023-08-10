@@ -6,7 +6,7 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:29 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/09 19:45:49 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:00:34 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -22,10 +22,9 @@ int	main(int argc, char **argv)
 		return (0);
 	pid = ft_atoi(argv[1]);
 	len = ft_strlen(argv[2]);
-	while (len > 0)
+	while (--len >= 0)
 	{
-		kill (pid, SIGUSR1);
-		len--;
+		if kill (pid, SIGUSR1);
 		usleep(500);
 	}
 	kill (pid, SIGUSR2);
