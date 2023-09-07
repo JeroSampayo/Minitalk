@@ -6,7 +6,7 @@
 #    By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/25 16:55:22 by jmiras-s          #+#    #+#              #
-#    Updated: 2023/08/03 14:19:19 by jmiras-s         ###   ########.fr        #
+#    Updated: 2023/08/10 19:37:27 by jmiras-s         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,24 +31,24 @@ LIB = libft/libft.a
 	@$(CC) $(CFLAGS) -MMD -I./ -c $< -o $@
 
 all:
-	@$(MAKE) -C libft
+	@$(MAKE) --no-print-directory -C libft
 	@$(MAKE) $(CLIENT)
 	@$(MAKE) $(SERVER)
 
 $(CLIENT):: $(OBJ_CLIENT)
-	@$(MAKE) -C libft
+	@$(MAKE) --no-print-directory -C libft
 	@$(CC) $(CFLAGS) $(OBJ_CLIENT) $(LIB) -o $@
 	@echo "Client compiled"
 
 $(SERVER):: $(OBJ_SERVER)
-	@$(MAKE) -C libft
+	@$(MAKE) --no-print-directory -C libft
 	@$(CC) $(CFLAGS) $(OBJ_SERVER) $(LIB) -o $@
 	@echo "Server compiled"
 
 clean:
 	@$(RM) $(OBJ_SERVER) $(OBJ_CLIENT) $(DEP_SERVER) $(DEP_CLIENT)
 	@$(RM) $(OBJ_SERVER_BONUS) $(OBJ_CLIENT_BONUS) $(DEP_SERVER_BONUS) $(DEP_CLIENT_BONUS)
-	@$(MAKE) clean -C libft
+	@$(MAKE) clean --no-print-directory -C libft
 	@echo "Removed"
 
 fclean: clean
