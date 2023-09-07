@@ -6,7 +6,7 @@
 /*   By: jmiras-s <jmiras-s@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:07:23 by jmiras-s          #+#    #+#             */
-/*   Updated: 2023/08/10 19:00:00 by jmiras-s         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:27:16 by jmiras-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -42,7 +42,7 @@ void	byte(int sig)
 	{
 		if (sig == SIGUSR1)
 			len++;
-		else 
+		else
 		{
 			str = safe_malloc(sizeof(char) * (len + 1));
 			len = 0;
